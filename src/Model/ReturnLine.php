@@ -2,7 +2,7 @@
 
 namespace ReturnManager\Model;
 
-use BusinessComponents\Money\Model\Money;
+use BusinessComponents\Money\Money;
 use BusinessComponents\Order\Model\OrderLine;
 
 class ReturnLine implements ReturnLineInterface
@@ -54,7 +54,7 @@ class ReturnLine implements ReturnLineInterface
         $money = new Money($this->unitPrice);
         $money = $money->multiply($this->quantity);
         $this->totalPrice = $money->getAmount();
-        return $this;
+        return $this->totalPrice;
     }
 
     public function setOrderLine(OrderLine $orderLine)
@@ -81,13 +81,21 @@ class ReturnLine implements ReturnLineInterface
         return $this->vat;
     }
 
+    public function getUnitPriceTotal()
+    {
+        $unit = new Money($this->unitPrice);
+        $unit = $unit->multiply($this->quantity);
+        return $unit->getAmount();
+    }
+
     public function getVatPrice()
     {
         $unitTotal = new Money($this->getUnitPriceTotal());
         $vatPrice  = new Money(0);
         if ($this->vat !== null) {
-            $vatPrice = $unitTotal->multiply($this->vat->getDecimalValue());
+            $vatPrice = $unitTotal->multiply($this->vat->getValue());
         }
-        return $vatPrice->getAmount();
+        $vatPrice = $vatPrice->getAmount();
+        return round(($vatPrice / 100), 1);
     }
 }
