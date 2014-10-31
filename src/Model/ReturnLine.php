@@ -10,6 +10,7 @@ class ReturnLine implements ReturnLineInterface
     private $quantity;
     private $unitPrice;
     private $totalPrice;
+    private $basePrice;
     private $key;
     private $orderLine;
 
@@ -49,12 +50,17 @@ class ReturnLine implements ReturnLineInterface
         return $this->unitPrice;
     }
 
-    public function calculateTotalprice()
+    public function setBaseprice()
     {
         $money = new Money($this->unitPrice);
         $money = $money->multiply($this->quantity);
-        $this->totalPrice = $money->getAmount();
-        return $this->totalPrice;
+        $this->basePrice = $money->getAmount();
+        return $this;
+    }
+
+    public function getBasePrice()
+    {
+        return $this->basePrice;
     }
 
     public function setOrderLine(OrderLine $orderLine)
@@ -97,5 +103,18 @@ class ReturnLine implements ReturnLineInterface
         }
         $vatPrice = $vatPrice->getAmount();
         return round(($vatPrice / 100), 1);
+    }
+
+    public function setTotalPrice()
+    {
+        $vatPrice  = $this->getVatPrice();
+        $unitPrice = $this->getUnitPriceTotal();
+        $this->totalPrice = $vatPrice + $unitPrice;
+        return $this;
+    }
+
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
     }
 }

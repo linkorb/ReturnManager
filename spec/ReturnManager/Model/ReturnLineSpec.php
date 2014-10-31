@@ -27,14 +27,15 @@ class ReturnLineSpec extends ObjectBehavior
         $this->getOrderLine()->shouldReturn($orderline);
     }
 
-    public function it_is_correct_calculatetotalprice()
+    public function it_is_correct_baseprice()
     {
         $orderline = new OrderLine();
         $orderline->setUnitPrice(15);
         $this->setOrderLine($orderline)->shouldReturn($this);
         $this->setQuantity(2)->shouldReturn($this);
         $this->setUnitPrice()->shouldReturn($this);
-        $this->calculateTotalprice()->shouldReturn(30);
+        $this->setBasePrice()->shouldReturn($this);
+        $this->getBasePrice()->shouldReturn(30);
     }
 
     public function it_is_correct_getvatprice()
@@ -50,5 +51,21 @@ class ReturnLineSpec extends ObjectBehavior
         $this->getUnitPriceTotal()->shouldReturn(30);
         $this->setVat()->shouldReturn($this);
         $this->getVatPrice()->shouldReturn(6.3);
+    }
+
+    public function it_is_correct_totalprice()
+    {
+        $orderline = new OrderLine();
+        $vat       = new Vat();
+        $vat->setValue(21);
+        $orderline->setUnitPrice(15);
+        $orderline->setVat($vat);
+        $this->setOrderLine($orderline)->shouldReturn($this);
+        $this->setQuantity(2)->shouldReturn($this);
+        $this->setUnitPrice()->shouldReturn($this);
+        $this->getUnitPriceTotal()->shouldReturn(30);
+        $this->setVat()->shouldReturn($this);
+        $this->setTotalPrice()->shouldReturn($this);
+        $this->getTotalPrice()->shouldReturn(36.3);
     }
 }
