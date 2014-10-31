@@ -1,9 +1,9 @@
 <?php
 
-namespace Model;
+namespace ReturnManager\Model;
 
-use BusinessComponents\Money\Money;
-use BusinessComponents\Order\OrderLine;
+use BusinessComponents\Money\Model\Money;
+use BusinessComponents\Order\Model\OrderLine;
 
 class ReturnLine implements ReturnLineInterface
 {
@@ -29,11 +29,11 @@ class ReturnLine implements ReturnLineInterface
         if (0 > $quantity) {
             throw new \OutOfRangeException('Quantity must be greater than 0.');
         }
-        $this->quantity = $quantity;
+        $this->quantity = (int)$quantity;
         return $this;
     }
 
-    public function getQuantity($quantity)
+    public function getQuantity()
     {
         return $this->quantity;
     }
@@ -60,6 +60,7 @@ class ReturnLine implements ReturnLineInterface
     public function setOrderLine(OrderLine $orderLine)
     {
         $this->orderLine = $orderLine;
+        return $this;
     }
 
     public function getOrderLine()

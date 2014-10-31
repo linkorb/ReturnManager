@@ -1,6 +1,6 @@
 <?php
 
-namespace Model;
+namespace ReturnManager\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
