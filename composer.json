@@ -1,6 +1,7 @@
 {
-	"name": "linkorb/returnmanager",
+    "name": "linkorb/returnmanager",
     "description": "Return goods",
+    "minimum-stability": "dev",
     "homepage": "https://github.com/linkorb/ReturnManager/",
     "type": "library",
     "authors": [
@@ -11,12 +12,12 @@
         }
     ],
     "require": {
-		"doctrine/collections": "~1.0",
+	"doctrine/collections": "~1.0",
         "businesscomponents/businesscomponents": "dev-master"
     },
     "require-dev": {
         "phpspec/phpspec": "2.1.*@dev",
-        "symfony/console": "~2.4"
+        "phpspec/nyan-formatters": "1.0.*@dev"
     },
     "autoload": {
         "psr-4": {
